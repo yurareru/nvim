@@ -1,5 +1,21 @@
 return {
   {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls",
+        }
+      })
+    end
+  },
+  {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v4.x',
     lazy = true,
@@ -52,6 +68,7 @@ return {
     },
     config = function()
       local lsp_zero = require('lsp-zero')
+      local lspcfg = require('lspconfig')
 
       local lsp_attach = function(client, bufnr)
         local opts = { buffer = bufnr }
@@ -86,9 +103,37 @@ return {
         }
       })
 
-      require('lspconfig').lua_ls.setup({})
-      require('lspconfig').tsserver.setup({})
-      require('lspconfig').rust_analyzer.setup({})
+      lspcfg.lua_ls.setup({})
+      lspcfg.tsserver.setup({
+        init_options = {
+          plugins = {
+            {
+              name = "@vue/typescript-plugin",
+              location =
+              "C:\\Users\\Danial\\AppData\\Local\\nvim-data\\mason\\packages\\vue-language-server\\node_modules\\@vue\\language-server\\node_modules\\@vue\\typescript-plugin",
+              --location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+              languages = { "javascript", "typescript", "vue" },
+            },
+          },
+        },
+        filetypes = {
+          "javascript",
+          "typescript",
+          "vue",
+        },
+      })
+      lspcfg.volar.setup({})
+      lspcfg.rust_analyzer.setup({})
+      lspcfg.htmx.setup({})
+      lspcfg.cssls.setup({})
+      lspcfg.tailwindcss.setup({})
+
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      lspcfg.html.setup({
+        capabilities = capabilities
+      })
     end
   }
 }
