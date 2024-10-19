@@ -23,16 +23,16 @@ return {
       }):find()
     end
 
-    vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
+    vim.keymap.set("n", "<leader>fh", function() toggle_telescope(harpoon:list()) end,
       { desc = "Open harpoon window" })
-    vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+    vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end, { desc = "Add file to harpoon" })
 
-    vim.keymap.set("n", "<leader>ha", function() harpoon:list():select(1) end)
-    vim.keymap.set("n", "<leader>hs", function() harpoon:list():select(2) end)
-    vim.keymap.set("n", "<leader>hd", function() harpoon:list():select(3) end)
-    vim.keymap.set("n", "<leader>hf", function() harpoon:list():select(4) end)
+    vim.keymap.set("n", "<leader>ha", function() harpoon:list():select(1) end, { desc = "1st harpoon buffer"})
+    vim.keymap.set("n", "<leader>hs", function() harpoon:list():select(2) end, { desc = "2nd harpoon buffer"})
+    vim.keymap.set("n", "<leader>hd", function() harpoon:list():select(3) end, { desc = "3rd harpoon buffer"})
+    vim.keymap.set("n", "<leader>hf", function() harpoon:list():select(4) end, { desc = "4th harpoon buffer"})
 
-    vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
-    vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end)
+    vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end, { desc = "Previous harpoon buffer"})
+    vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end, { desc = "Next harpoon buffer"})
   end
 }

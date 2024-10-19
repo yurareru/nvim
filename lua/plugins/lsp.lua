@@ -95,22 +95,16 @@ return {
         format_opts = {
           async = false,
           timeout_ms = 10000,
-        },
-        servers = {
-          ['lua_ls'] = { 'lua' },
-          ['tsserver'] = { 'javascript', 'typescript' },
-          ['rust_analyzer'] = { 'rust' },
         }
       })
 
       lspcfg.lua_ls.setup({})
-      lspcfg.tsserver.setup({
+      lspcfg.ts_ls.setup({
         init_options = {
           plugins = {
             {
               name = "@vue/typescript-plugin",
-              location =
-              "C:\\Users\\Danial\\AppData\\Local\\nvim-data\\mason\\packages\\vue-language-server\\node_modules\\@vue\\language-server\\node_modules\\@vue\\typescript-plugin",
+              location = (os.getenv("USERPROFILE") or os.getenv("HOME")) .. "/AppData/Local/nvim-data/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
               --location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
               languages = { "javascript", "typescript", "vue" },
             },
@@ -127,7 +121,6 @@ return {
       lspcfg.htmx.setup({})
       lspcfg.cssls.setup({})
       lspcfg.tailwindcss.setup({})
-
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true

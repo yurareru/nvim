@@ -7,6 +7,9 @@ return {
       display = {
         show_repository = false,
       },
+      idle = {
+        enable = false
+      }
     })
   end
 }
