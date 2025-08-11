@@ -1,21 +1,19 @@
-local options = {
-  expandtab = true,
-  tabstop = 2,
-  softtabstop = 2,
-  shiftwidth = 2,
-  number = true,
-  relativenumber = true,
-  cursorline = true,
-  scrolloff = 8,
-  sidescrolloff = 8,
-  ignorecase = true,
-  smartcase = true,
-  incsearch = true,
-  hlsearch = false,
-  ctermbg=none,
-  guibg=none,
-}
+local opt = vim.opt
 
-for k, v in pairs(options) do
-  vim.opt[k] = v
-end
+opt.expandtab = true
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftwidth = 4
+opt.number = true
+opt.relativenumber = true
+opt.cursorline = true
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+opt.ignorecase = true
+opt.smartcase = true
+opt.incsearch = true
+opt.hlsearch = false
+opt.autoread = true
+opt.termguicolors = true
+opt.signcolumn = "yes"
+opt.winborder = "rounded"
