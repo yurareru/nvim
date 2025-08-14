@@ -1,3 +1,3 @@
 # Neovim configuration
 
-My WIP Neovim 0.12+ configuration
+My WIP forever Neovim 0.12+ configuration

@@ -3,6 +3,10 @@ vim.g.mapleader = " "
 local set = vim.keymap.set
 
 set("n", "<leader><leader>", ":update<CR> :source<CR>", { desc = "Reload config" })
+set("n", "<leader>fn", ":badd $MYVIMRC | buffer init.lua<CR>", { desc = "Open Neovim config in new buffer" })
+
+set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definiton" })
+set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 
 set("n", "<C-k>", ":wincmd k<CR>", { desc = "Move to window above" })
 set("n", "<C-j>", ":wincmd j<CR>", { desc = "Move to window below" })
