@@ -3,24 +3,21 @@ vim.g.mapleader = " "
 local set = vim.keymap.set
 
 set("n", "<leader><leader>", ":update<CR> :source<CR>", { desc = "Reload config" })
-set("n", "<leader>fn", ":badd $MYVIMRC | buffer init.lua<CR>", { desc = "Open Neovim config in new buffer" })
+set("n", "<leader>rc", ":badd $MYVIMRC | buffer init.lua<CR>", { desc = "Open Neovim config in new buffer" })
 
 set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definiton" })
 set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 
-set("n", "<C-k>", ":wincmd k<CR>", { desc = "Move to window above" })
-set("n", "<C-j>", ":wincmd j<CR>", { desc = "Move to window below" })
-set("n", "<C-h>", ":wincmd h<CR>", { desc = "Move to left window" })
-set("n", "<C-l>", ":wincmd l<CR>", { desc = "Move to right window" })
-
-set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected line(s) down" })
-set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected line(s) up" })
+set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
 set("n", "J", "mzJ`z", { desc = "Join lines" })
-set("n", "<C-d>", "<C-d>zz", { desc = "Scroll half-page down" })
-set("n", "<C-u>", "<C-u>zz", { desc = "Scroll half-page up" })
 set("n", "n", "nzzzv", { desc = "Next search result" })
 set("n", "N", "Nzzzv", { desc = "Previous search result" })
+set("n", "<C-d>", "<C-d>zz", { desc = "Scroll half-page down" })
+set("n", "<C-u>", "<C-u>zz", { desc = "Scroll half-page up" })
 
 set("n", "<leader>w", ":wa<CR>", { desc = "Save file" })
 set("n", "<leader>q", ":q<CR>", { desc = "Quit window" })
@@ -39,10 +36,22 @@ set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 set("n", "<leader>sv", ":vsplit<CR>", { desc = "Vertical split" })
 set("n", "<leader>sh", ":split<CR>", { desc = "Horizontal split" })
 
+set("n", "<C-k>", ":wincmd k<CR>", { desc = "Move to window above" })
+set("n", "<C-j>", ":wincmd j<CR>", { desc = "Move to window below" })
+set("n", "<C-h>", ":wincmd h<CR>", { desc = "Move to left window" })
+set("n", "<C-l>", ":wincmd l<CR>", { desc = "Move to right window" })
+
 set("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
 set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
 set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
 set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
+
+set('n', '<leader>tn', ':tabnew<CR>', { desc = 'New tab' })
+set('n', '<leader>tx', ':tabclose<CR>', { desc = 'Close tab' })
+
+set('n', '<leader>tm', ':tabmove<CR>', { desc = 'Move tab' })
+set('n', '<leader>t>', ':tabmove +1<CR>', { desc = 'Move tab right' })
+set('n', '<leader>t<', ':tabmove -1<CR>', { desc = 'Move tab left' })
 
 set("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
 set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank selection to system clipboard" })

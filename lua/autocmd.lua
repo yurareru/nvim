@@ -8,6 +8,8 @@ autocmd("BufWritePre", {
     end,
 })
 
+-- autocmd('FocusLost', { pattern = '*', command = 'silent! wa' })
+
 augroup("YankHighlight", { clear = true })
 autocmd("TextYankPost", {
     desc = "Highlight yanked test",
