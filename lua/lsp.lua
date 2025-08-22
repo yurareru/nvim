@@ -1,22 +1,32 @@
-vim.lsp.config["clangd"] = {
-    cmd = { "clangd", "--clang-tidy", "--header-insertion=never" }
+local lsp = vim.lsp
+local diagnostic = vim.diagnostic
+
+local vue_plugin = {
+	name = "@vue/typescript-plugin",
+	location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+	languages = { "vue" },
+	configNamespace = "typescript",
 }
+local vtsls = {
+	settings = { vtsls = { tsserver = { globalPlugins = { vue_plugin } } } },
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+}
+local ts_ls = { init_options = { plugins = { vue_plugin } } }
+local clangd = { cmd = { "clangd", "--clang-tidy", "--header-insertion=never" } }
 
-vim.diagnostic.config({
-    virtual_text = { prefix = '●' },
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = true,
-})
+lsp.config("clangd", clangd)
+lsp.config("vtsls", vtsls)
+lsp.config("ts_ls", ts_ls)
 
-vim.diagnostic.config({
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = "✗",
-            [vim.diagnostic.severity.WARN] = "⚠",
-            [vim.diagnostic.severity.INFO] = "ℹ",
-            [vim.diagnostic.severity.HINT] = "💡",
-        }
-    }
-})
+diagnostic.config {
+	virtual_text = { prefix = "●" },
+	severity_sort = true,
+	signs = {
+		text = {
+			[diagnostic.severity.ERROR] = "",
+			[diagnostic.severity.WARN] = "",
+			[diagnostic.severity.INFO] = "",
+			[diagnostic.severity.HINT] = "",
+		},
+	},
+}
