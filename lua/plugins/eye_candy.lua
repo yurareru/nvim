@@ -8,11 +8,24 @@ vim.pack.add {
 	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
 	"https://github.com/refractalize/oil-git-status.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/smjonas/live-command.nvim",
 }
 
 require "oil-git-status".setup()
-require "gitsigns".setup()
+require "gitsigns".setup {
+	current_line_blame = true,
+	current_line_blame_opts = {
+		delay = 100,
+	},
+}
 require "mini.icons".setup()
+require "live-command".setup {
+	commands = {
+		Norm = { cmd = "norm" },
+		D = { cmd = "d" },
+		G = { cmd = "g" },
+	},
+}
 local starter = require "mini.starter"
 local header_art = [[
 ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗

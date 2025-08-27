@@ -58,6 +58,7 @@ local function fetch_today(callback)
 
 	local auth = vim.fn.system({ "printf", "%s:", api_key })
 	local encoded = vim.fn.system({ "base64" }, auth):gsub("%s+", "")
+	-- /api/v1/users/current/status_bar/today is cached
 	local url = "https://wakatime.com/api/v1/users/current/summaries?range=Today"
 
 	local stdout = vim.loop.new_pipe(false)

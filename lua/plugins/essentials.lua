@@ -79,6 +79,9 @@ require "mason-lspconfig".setup {
 require "conform".setup {
 	formatters_by_ft = {
 		lua = { "stylua" },
+		typescript = { "prettierd", "prettier" },
+		javascript = { "prettierd", "prettier" },
+		json = { "prettierd", "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,

@@ -4,7 +4,12 @@ local api = vim.api
 vim.g.mapleader = " "
 
 set("n", "<leader><leader>", ":update<CR> :source<CR>", { desc = "Reload config" })
-set("n", "<leader>rc", ":badd $MYVIMRC | buffer init.lua<CR>", { desc = "Open Neovim config in new buffer" })
+set("n", "<leader>rc", ":tabedit $MYVIMRC<CR>", { desc = "Open Neovim config in new tab" })
+set("n", "<leader>i", function()
+	local enabled = vim.lsp.inlay_hint.is_enabled()
+	vim.lsp.inlay_hint.enable(not enabled)
+	vim.notify("Inlay hints " .. (enabled and "disabled" or "enabled"))
+end, { desc = "Toggle inlay hints" })
 
 set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definiton" })
 set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
@@ -80,5 +85,24 @@ set("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
 set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank selection to system clipboard" })
 set({ "n", "v" }, "<leader>p", [["+p]], { desc = "Put from system clipboard" })
 set({ "n", "v" }, "<leader>P", [["+P]], { desc = "Put before from system clipboard" })
-set("x", "<leader>p", [["_dP]], { desc = "Paste from system clipboard and overwrite selection" })
 set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to void register" })
+
+set("n", "<leader>D", function()
+	local line = api.nvim_win_get_cursor(0)[1]
+	local buf = vim.diagnostic.open_float()
+	if not buf then
+		vim.notify(("No diagnostics on line %s"):format(line), vim.log.levels.ERROR)
+		return
+	end
+
+	local lines = api.nvim_buf_get_lines(buf, 0, -1, true)
+
+	if vim.fn.setreg("+", lines) ~= 0 then
+		vim.notify(("An error happened while trying to copy the diagnostics on line %s"):format(line))
+		return
+	end
+
+	vim.notify(([[Diagnostics from line %s copied to clipboard.
+
+%s]]):format(line, vim.fn.getreg "+"))
+end, { desc = "Copy current line diagnostics" })

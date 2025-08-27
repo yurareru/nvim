@@ -9,7 +9,7 @@ local vue_plugin = {
 }
 local vtsls = {
 	settings = { vtsls = { tsserver = { globalPlugins = { vue_plugin } } } },
-	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+	filetypes = { "vue" },
 }
 local ts_ls = { init_options = { plugins = { vue_plugin } } }
 local clangd = { cmd = { "clangd", "--clang-tidy", "--header-insertion=never" } }
@@ -21,12 +21,14 @@ lsp.config("ts_ls", ts_ls)
 diagnostic.config {
 	virtual_text = { prefix = "●" },
 	severity_sort = true,
-	signs = {
-		text = {
-			[diagnostic.severity.ERROR] = "",
-			[diagnostic.severity.WARN] = "",
-			[diagnostic.severity.INFO] = "",
-			[diagnostic.severity.HINT] = "",
-		},
-	},
+	signs = { text = { "", "", "", "" } },
 }
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client.server_capabilities.inlayHintProvider then
+			vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+		end
+	end,
+})

@@ -1,0 +1,23 @@
+snippet init "Rust CP Template"
+    use std::io::stdin;
+
+    fn take_int() -> usize {
+        let mut input = String::new();
+        stdin().read_line(&mut input).unwrap();
+        input.trim().parse().unwrap()
+    }
+
+    fn take_vector() -> Vec<isize> {
+        let mut input = String::new();
+        stdin().read_line(&mut input).unwrap();
+        input
+            .trim()
+            .split_whitespace()
+            .map(|x| x.parse().unwrap())
+            .collect()
+    }
+
+    fn main() {
+        let n = take_int();
+        $0
+    }
