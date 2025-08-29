@@ -3,6 +3,7 @@ vim.pack.add {
 	"https://github.com/vyfor/cord.nvim",
 	"https://github.com/echasnovski/mini.extra",
 	"https://github.com/echasnovski/mini.visits",
+	"https://github.com/christoomey/vim-tmux-navigator",
 }
 
 require "mini.extra".setup()

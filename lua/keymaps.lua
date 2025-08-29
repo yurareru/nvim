@@ -29,10 +29,6 @@ set("n", "<leader>w", ":wa<CR>", { desc = "Save file" })
 set("n", "<leader>q", ":q<CR>", { desc = "Quit window" })
 set("n", "<leader>x", ":wqa<CR>", { desc = "Save and quit" })
 set("n", "<leader>Q", ":q!<CR>", { desc = "Force quit" })
-set("n", "<Leader>W", function()
-	vim.cmd "write !sudo tee % > /dev/null"
-	vim.cmd "edit!"
-end, { desc = "Write with sudo" })
 
 set("n", "<C-a>", "ggVG", { desc = "Select all" })
 set("n", "<C-_>", "gcc", { remap = true, desc = "Toggle comment line" })
@@ -64,11 +60,6 @@ end, { desc = "Delete other buffers" })
 
 set("n", "<leader>sv", ":vsplit<CR>", { desc = "Vertical split" })
 set("n", "<leader>sh", ":split<CR>", { desc = "Horizontal split" })
-
-set("n", "<C-k>", ":wincmd k<CR>", { desc = "Move to window above" })
-set("n", "<C-j>", ":wincmd j<CR>", { desc = "Move to window below" })
-set("n", "<C-h>", ":wincmd h<CR>", { desc = "Move to left window" })
-set("n", "<C-l>", ":wincmd l<CR>", { desc = "Move to right window" })
 
 set("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
 set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
