@@ -2,15 +2,26 @@ vim.pack.add {
 	"https://github.com/wakatime/vim-wakatime",
 	"https://github.com/vyfor/cord.nvim",
 	"https://github.com/echasnovski/mini.extra",
-	"https://github.com/echasnovski/mini.visits",
 	"https://github.com/christoomey/vim-tmux-navigator",
 }
 
 require "mini.extra".setup()
-require "mini.visits".setup()
 require "cord".setup {
 	timestamp = { shared = true },
-	idle = { enabled = false },
+	idle = {
+		details = function(opts)
+			local name = opts.filename ~= nil and opts.filename ~= "" and opts.filename or opts.name
+			return "Idling in " .. name
+		end,
+		unidle_on_focus = false,
+	},
+	display = { theme = "catppuccin" },
+	plugins = {
+		["cord.plugins.persistent_timer"] = {
+			scope = "global",
+			mode = "active",
+		},
+	},
 }
 vim.api.nvim_create_autocmd("PackChanged", {
 	callback = function(opts)

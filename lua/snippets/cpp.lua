@@ -1,0 +1,71 @@
+local ls = require("luasnip")
+local s = ls.snippet
+local t = ls.text_node
+local i = ls.insert_node
+
+return {
+	s({ trig = "init", name = "C++ CP Template" }, {
+		t({
+			"#include <bits/stdc++.h>",
+			"using namespace std;",
+			"",
+			"using ll = long long;",
+			"using pii = pair<int, int>;",
+			"using vi = vector<int>;",
+			"",
+			"#define pb push_back",
+			"#define berak break",
+			"#define Bismillah ios_base::sync_with_stdio(false);",
+			"#define AC cin.tie(nullptr);",
+			"",
+			"constexpr char nl = '\\n';",
+			"constexpr int MOD = 1e9 + 7;",
+			"constexpr int INF = 1e9;",
+			"constexpr int MAX_N = 1005;",
+			"",
+			"void solve();",
+			"",
+			"int main() {",
+			"    Bismillah AC;",
+			"    int tc = 1;",
+			"    // cin >> tc;",
+			"    while (tc--) solve();",
+			"    return 0;",
+			"}",
+			"",
+			"void solve() {",
+			"    int n;",
+			"    cin >> n;",
+			"    ",
+		}),
+		i(0),
+		t({
+			"",
+			"}",
+			"",
+		}),
+	}),
+
+	s({ trig = "dsu", name = "DSU" }, {
+		t({
+			"struct DSU {",
+			"    vector<int> e;",
+			"    void init(int n) { e = vector<int>(n, -1); }",
+			"    int find(int x) { return (e[x] < 0 ? x : e[x] = find(e[x])); }",
+			"    int size(int x) { return -e[find(x)]; }",
+			"    bool same(int x, int y) { return find(x) == find(y); }",
+			"    bool unite(int x, int y) {",
+			"        x = find(x);",
+			"        y = find(y);",
+			"        if (x == y) return 0;",
+			"        if (e[x] > e[y]) swap(x, y);",
+			"        e[x] += e[y];",
+			"        e[y] = x;",
+			"        return 1;",
+			"    }",
+			"};",
+			"",
+		}),
+		i(0),
+	}),
+}

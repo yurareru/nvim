@@ -10,12 +10,46 @@ vim.pack.add {
 	"https://github.com/stevearc/conform.nvim",
 }
 
+function _G.get_oil_winbar()
+	local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+	local dir = require "oil".get_current_dir(bufnr)
+	if dir then
+		return vim.fn.fnamemodify(dir, ":~")
+	else
+		return vim.api.nvim_buf_get_name(0)
+	end
+end
+
+local detail = false
 require "oil".setup {
+	delete_to_trash = true,
 	win_options = {
 		signcolumn = "yes:2",
+		winbar = "%!v:lua.get_oil_winbar()",
 	},
-	delete_to_trash = true,
+	view_options = {
+		show_hidden = true,
+	},
+	keymaps = {
+		["<C-p>"] = {
+			"actions.preview",
+			opts = { split = "botright" }, -- open preview in a right-hand vertical split
+		},
+		["gd"] = {
+			desc = "Toggle file detail view",
+			callback = function()
+				detail = not detail
+				if detail then
+					require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+				else
+					require("oil").set_columns({ "icon" })
+				end
+			end,
+		},
+	},
 }
+vim.api.nvim_set_hl(0, "OilDir", { link = "Special" })
+
 require "mini.pick".setup()
 require "nvim-treesitter.configs".setup {
 	-- stylua: ignore
@@ -57,14 +91,6 @@ require "nvim-treesitter.configs".setup {
 		},
 	},
 }
-vim.api.nvim_create_autocmd("PackChanged", {
-	callback = function(opts)
-		-- untested
-		if opts.data.spec.name == "nvim-treesitter" and opts.data.kind == "update" then
-			vim.cmd "TSUpdate"
-		end
-	end,
-})
 require "nvim-treesitter-textobjects"
 require "mason".setup()
 require "mason-lspconfig".setup {

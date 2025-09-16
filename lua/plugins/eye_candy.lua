@@ -36,6 +36,29 @@ require "live-command".setup {
 		G = { cmd = "g" },
 	},
 }
+
+vim.cmd.colorscheme "catppuccin"
+local mocha = require "catppuccin.palettes".get_palette "mocha"
+
+local custom_mocha = require "lualine.themes.catppuccin"
+
+custom_mocha.normal.a.bg = mocha.pink
+custom_mocha.normal.b.fg = mocha.pink
+
+require "lualine".setup {
+	options = {
+		theme = custom_mocha,
+	},
+	sections = {
+		lualine_y = { require "utils".today_time },
+	},
+}
+require "render-markdown".setup {
+	preset = "obsidian",
+	heading = { sign = false },
+	code = { language_name = false, sign = false },
+}
+
 local starter = require "mini.starter"
 local header_art = [[
 ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
@@ -47,24 +70,38 @@ local header_art = [[
 ]]
 starter.setup {
 	items = {
-		{ name = "Oil", action = "Oil", section = "Pick" },
-		starter.sections.pick(),
-		starter.sections.builtin_actions(),
-		starter.sections.recent_files(4, true),
+		{ name = "Oil", action = "Oil", section = "Actions" },
+		{
+			name = "Files",
+			action = function()
+				require "mini.pick".builtin.cli {
+					command = { "rg", "--files", "--hidden", "--follow", "--glob", "!**/.git/*" },
+				}
+			end,
+			section = "Actions",
+		},
+
+		{ name = "Explorer", action = "Pick explorer", section = "Actions" },
+		{ name = "New Buffer", action = "enew", section = "Actions" },
+		{ name = "Quit Neovim", action = "qa!", section = "Actions" },
+		starter.sections.recent_files(5, true, false),
 	},
-	footer = "",
 	header = header_art,
+	query_updaters = "abcdefghilmnopqrstuvwxyz0123456789_.",
+	footer = "",
+	content_hooks = {
+		starter.gen_hook.adding_bullet("❯ "),
+		starter.gen_hook.aligning("center", "center"),
+	},
 }
 
-vim.cmd.colorscheme "catppuccin"
-require "lualine".setup {
-	theme = "catppuccin",
-	sections = {
-		lualine_y = { require "utils.waka".today_time },
-	},
-}
-require "render-markdown".setup {
-	preset = "obsidian",
-	heading = { sign = false },
-	code = { language_name = false, sign = false },
-}
+vim.cmd([[
+  silent! augroup MiniStarterKeymaps
+    au!
+    au User MiniStarterOpened nmap <buffer> j <Cmd>lua MiniStarter.update_current_item("next")<CR>
+    au User MiniStarterOpened nmap <buffer> k <Cmd>lua MiniStarter.update_current_item("prev")<CR>
+    au User MiniStarterOpened nmap <buffer> - <Cmd>Oil<CR>
+  augroup END
+]])
+
+vim.api.nvim_set_hl(0, "MiniStarterHeader", { fg = mocha.pink })

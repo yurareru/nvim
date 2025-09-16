@@ -7,7 +7,7 @@ vim.pack.add {
 
 require "nvim-autopairs".setup()
 require "luasnip.loaders.from_vscode".lazy_load()
-require "luasnip.loaders.from_snipmate".lazy_load()
+require "luasnip.loaders.from_lua".load { paths = vim.fn.stdpath("config") .. "/lua/snippets/" }
 require "blink.cmp".setup {
 	signature = { enabled = true, window = { border = "rounded" } },
 	completion = {
@@ -31,13 +31,3 @@ require "blink.cmp".setup {
 		},
 	},
 }
-
-vim.api.nvim_create_autocmd("PackChanged", {
-	callback = function(opts)
-		-- untested
-		if opts.data.spec.name == "blink.cmp" and opts.data.kind == "update" then
-			local path = vim.fn.stdpath("data") .. "/site/pack/core/opt/blink.cmp"
-			vim.fn.termopen({ "cargo", "build", "--release" }, { cwd = path })
-		end
-	end,
-})

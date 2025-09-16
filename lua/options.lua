@@ -19,6 +19,8 @@ opt.smartcase = true
 opt.incsearch = true
 opt.hlsearch = false
 
+opt.title = true
+opt.titlestring = "%t"
 opt.termguicolors = true
 opt.autoread = true
 opt.signcolumn = "yes"
