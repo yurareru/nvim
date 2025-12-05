@@ -6,7 +6,6 @@ vim.pack.add {
 	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
 	"https://github.com/refractalize/oil-git-status.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/smjonas/live-command.nvim",
 }
 
 local is_ssh = vim.env.SSH_CONNECTION ~= nil or vim.env.SSH_CLIENT ~= nil
@@ -28,12 +27,10 @@ require "gitsigns".setup {
 		delay = 100,
 	},
 }
-require "mini.icons".setup()
-require "live-command".setup {
-	commands = {
-		Norm = { cmd = "norm" },
-		D = { cmd = "d" },
-		G = { cmd = "g" },
+require "mini.icons".setup {
+	default = {
+		directory = { hl = "OilDir" },
+		file = { hl = "OilFile" },
 	},
 }
 
@@ -99,9 +96,14 @@ vim.cmd([[
   silent! augroup MiniStarterKeymaps
     au!
     au User MiniStarterOpened nmap <buffer> j <Cmd>lua MiniStarter.update_current_item("next")<CR>
+  au User MiniStarterOpened nmap <buffer> - <Cmd>Oil<CR>
     au User MiniStarterOpened nmap <buffer> k <Cmd>lua MiniStarter.update_current_item("prev")<CR>
-    au User MiniStarterOpened nmap <buffer> - <Cmd>Oil<CR>
   augroup END
 ]])
 
 vim.api.nvim_set_hl(0, "MiniStarterHeader", { fg = mocha.pink })
+vim.api.nvim_set_hl(0, "OilDir", { fg = mocha.pink })
+vim.api.nvim_set_hl(0, "OilFile", { fg = mocha.lavender })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = mocha.pink })
+vim.api.nvim_set_hl(0, "FloatTitle", { fg = mocha.lavender })
+vim.api.nvim_set_hl(0, "WinBar", { fg = mocha.lavender })

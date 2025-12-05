@@ -1,4 +1,5 @@
 ---@diagnostic disable: unused-local
+local api = vim.api
 local M = {}
 
 local cache = {
@@ -124,4 +125,36 @@ function M.set_buffer_tab_size(size)
 	print("Buffer tab size set to " .. size)
 end
 
+local function delete_no_name_buffer()
+	for _, buf in ipairs(api.nvim_list_bufs()) do
+		if api.nvim_buf_get_name(buf) == "" then
+			api.nvim_buf_delete(buf, {})
+		end
+	end
+end
+
+function M.delete_buffer()
+	vim.cmd "bdelete"
+	if api.nvim_buf_get_name(0) == "" then
+		require "mini.starter".open()
+		delete_no_name_buffer()
+	end
+end
+
+function M.delete_all_buffers()
+	for _, buf in ipairs(api.nvim_list_bufs()) do
+		if api.nvim_buf_is_loaded(buf) then
+			api.nvim_buf_delete(buf, {})
+		end
+	end
+	require "mini.starter".open()
+	delete_no_name_buffer()
+end
+function M.delete_other_buffers()
+	for _, buf in ipairs(api.nvim_list_bufs()) do
+		if buf ~= api.nvim_get_current_buf() and api.nvim_buf_is_loaded(buf) then
+			api.nvim_buf_delete(buf, {})
+		end
+	end
+end
 return M

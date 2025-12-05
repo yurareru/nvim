@@ -12,10 +12,9 @@ set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
 set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
-
 set("n", "<C-a>", "ggVG", { desc = "Select all" })
-set("n", "<C-_>", "gcc", { remap = true, desc = "Toggle comment line" })
-set("v", "<C-_>", "gc", { remap = true, desc = "Toggle comment" })
+set("n", "<C-_>", "gcc", { remap = true, desc = "Toggle line comment" })
+set("v", "<C-_>", "gb", { remap = true, desc = "Toggle block comment" })
 
 -- Center view
 set("n", "J", "mzJ`z", { desc = "Join lines" })
@@ -53,11 +52,11 @@ set("n", "<leader>tm", ":tabmove<CR>", { desc = "Move tab" })
 set("n", "<leader>t>", ":tabmove +1<CR>", { desc = "Move tab right" })
 set("n", "<leader>t<", ":tabmove -1<CR>", { desc = "Move tab left" })
 
-set("n", "<leader>t2", function()
+set("n", "<leader>ts2", function()
 	require "utils".set_buffer_tab_size(2)
 end, { desc = "Set current buffer tab size to 2 spaces" })
 
-set("n", "<leader>t4", function()
+set("n", "<leader>ts4", function()
 	require "utils".set_buffer_tab_size(4)
 end, { desc = "Set current buffer tab size to 4 spaces" })
 
@@ -65,38 +64,16 @@ end, { desc = "Set current buffer tab size to 4 spaces" })
 set("n", "<S-l>", ":bnext<CR>", { desc = "Next buffer" })
 set("n", "<S-h>", ":bprevious<CR>", { desc = "Previous buffer" })
 
-local function delete_no_name_buffer()
-	for _, buf in ipairs(api.nvim_list_bufs()) do
-		if api.nvim_buf_get_name(buf) == "" then
-			api.nvim_buf_delete(buf, {})
-		end
-	end
-end
-
 set("n", "<leader>bd", function()
-	vim.cmd "bdelete"
-	if api.nvim_buf_get_name(0) == "" then
-		require "mini.starter".open()
-		delete_no_name_buffer()
-	end
+	require "utils".delete_buffer()
 end, { desc = "Delete buffer" })
 
 set("n", "<leader>ba", function()
-	for _, buf in ipairs(api.nvim_list_bufs()) do
-		if api.nvim_buf_is_loaded(buf) then
-			api.nvim_buf_delete(buf, {})
-		end
-	end
-	require "mini.starter".open()
-	delete_no_name_buffer()
+	require "utils".delete_all_buffers()
 end, { desc = "Delete all buffers" })
 
 set("n", "<leader>bo", function()
-	for _, buf in ipairs(api.nvim_list_bufs()) do
-		if buf ~= api.nvim_get_current_buf() and api.nvim_buf_is_loaded(buf) then
-			api.nvim_buf_delete(buf, {})
-		end
-	end
+	require "utils".delete_other_buffers()
 end, { desc = "Delete other buffers" })
 
 -- LSP

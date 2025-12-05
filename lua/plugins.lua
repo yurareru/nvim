@@ -3,6 +3,7 @@ require "plugins.cmp"
 require "plugins.eye_candy"
 require "plugins.misc"
 
+-- plugin keymaps
 local set = vim.keymap.set
 set("n", "-", ":Oil<CR>", { desc = "Open parent directory" })
 set("n", "<leader>e", ":Oil<CR>", { desc = "Open parent directory" })
@@ -19,7 +20,6 @@ set("n", "<leader>fe", ":Pick explorer<CR>", { desc = "Open explorer window" })
 set("n", "<leader>fH", require "mini.starter".open, { desc = "Open starter homepage" })
 
 set("n", "<leader>cf", require "conform".format, { desc = "Format current file" })
-set("n", "<leader>?", require "which-key".show, { desc = "Buffer Local Keymaps (which-key)" }, { global = false })
 set("n", "<C-h>", ":TmuxNavigateLeft<CR>", { desc = "Navigate left" })
 set("n", "<C-l>", ":TmuxNavigateRight<CR>", { desc = "Navigate Right" })
 set("n", "<C-j>", ":TmuxNavigateDown<CR>", { desc = "Navigate Down" })
